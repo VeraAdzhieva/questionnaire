@@ -1,10 +1,11 @@
 import datetime
 
 from django.test import TestCase
-from django.utils import timezone
 from django.urls import reverse
+from django.utils import timezone
 
 from .models import Question
+
 
 class QuestionModelTests(TestCase):
     def test_was_published_recently_with_future_question(self):
@@ -15,7 +16,6 @@ class QuestionModelTests(TestCase):
         future_question = Question(pub_date=time)
         self.assertIs(future_question.was_published_recently(), False)
 
-
     def test_was_published_recently_with_old_question(self):
         """
         Дата публикации позже чем 1 день.
@@ -24,14 +24,14 @@ class QuestionModelTests(TestCase):
         old_question = Question(pub_date=time)
         self.assertIs(old_question.was_published_recently(), False)
 
-
     def test_was_published_recently_with_recent_question(self):
         """
         Дата публикации в пределах последнего дня.
         """
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
-        self.assertIs(recent_question.was_published_recently(), True)        
+        self.assertIs(recent_question.was_published_recently(), True)
+
 
 def create_question(question_text, days):
     """
@@ -95,6 +95,7 @@ class QuestionIndeViewTests(TestCase):
             [question2, question1],
         )
 
+
 class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
         """
@@ -113,6 +114,7 @@ class QuestionDetailViewTests(TestCase):
         url = reverse("polls:detail", args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
 
 class QuestionResultsViewTests(TestCase):
     def test_future_question(self):
