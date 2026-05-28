@@ -31,6 +31,7 @@ jobs:
         run: poetry run pre-commit run --all-files
 
       - name: Run tests
+        working-directory: ./djangotutorial
         run: poetry run pytest -v
         env:
           DJANGO_SETTINGS_MODULE: djangotutorial.mysite.settings
